@@ -1,0 +1,2 @@
+guacamole-auth-plugin
+=====================

@@ -1,4 +1,4 @@
-package com.cvp.guacamole;
+package net.sourceforge.guacamole.net.cvp;
 
 import java.util.List;
 

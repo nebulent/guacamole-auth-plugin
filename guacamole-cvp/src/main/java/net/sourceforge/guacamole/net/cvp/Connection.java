@@ -1,4 +1,4 @@
-package com.cvp.guacamole;
+package net.sourceforge.guacamole.net.cvp;
 
 import javax.xml.bind.annotation.XmlElement;
 

@@ -1,18 +1,13 @@
 package net.sourceforge.guacamole.net.cvp;
 
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import net.sourceforge.guacamole.protocol.GuacamoleConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-public class RedisConnector {
+public class RedisConnector extends AbstractConnector implements Connector {
 
     protected JedisPool server;
     protected String serverUrl = "localhost";
@@ -23,12 +18,6 @@ public class RedisConnector {
     protected int serverMaxWait = 1000;
     protected boolean serverTestOnBorrow = false;
     
-    protected static String PROP_KEY_HOSTNAME = "hostname";
-    protected static String PROP_KEY_PORT = "port";
-    protected static String PROP_KEY_PASSWORD = "password";
-    protected ObjectMapper objectMapper = new ObjectMapper();
-    protected Logger logger = LoggerFactory.getLogger(RedisConnector.class);
-
     public void init() {
 	JedisPoolConfig config = new JedisPoolConfig();
 	config.setMaxActive(serverMaxActive);
@@ -43,6 +32,7 @@ public class RedisConnector {
 	server.destroy();
     }
 
+    @Override
     public Map<String, GuacamoleConfiguration> findConfigurations(String key) {
 	Jedis jedis = server.getResource();
 	String value = null;
@@ -72,18 +62,6 @@ public class RedisConnector {
 		//logger.info("Password:" + con.getPassword());
 	    }
 	    return configs;
-	}
-	return null;
-    }
-
-    public AuthResponse convert(String value) {
-	if (value != null) {
-	    try {
-		AuthResponse rv = objectMapper.readValue(value, AuthResponse.class);
-		return rv;
-	    } catch (IOException ioe) {
-		logger.error("Error in deserializing json", ioe);
-	    }
 	}
 	return null;
     }

@@ -10,7 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class TokenAuthenticationProvider implements AuthenticationProvider {
 
-    protected static RedisConnector connector = new RedisConnector();
+    protected static Connector connector = new MySQLConnector();
     protected TokenParser parser = new TokenParser();
     protected static String PARAM_TOKEN = "username";
     
@@ -18,7 +18,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
     
     static {
         applicationContext = new ClassPathXmlApplicationContext(new String[]{"classpath:guacamole-cvp-context.xml"});
-	connector = applicationContext.getBean("connector", RedisConnector.class);
+	connector = applicationContext.getBean("connector", MySQLConnector.class);
     }    
 
     @Override

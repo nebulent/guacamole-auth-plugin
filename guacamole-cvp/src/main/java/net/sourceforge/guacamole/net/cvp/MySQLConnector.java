@@ -27,10 +27,10 @@ public class MySQLConnector extends AbstractConnector implements Connector {
             connection = DriverManager.getConnection(dbUrl, properties);
             statement = connection.prepareStatement("select config from configuration where id = ?");
             deleteStatement = connection.prepareStatement("delete from configuration where id = ?");
-            connection.commit();
         } catch (ClassNotFoundException cnfe) {
             throw new RuntimeException("JDBC driver not found");
         } catch (SQLException sqle) {
+            sqle.printStackTrace();
             throw new RuntimeException("No database connection: " + dbUrl + " " + user + "/" + password);
         }
 
@@ -59,7 +59,7 @@ public class MySQLConnector extends AbstractConnector implements Connector {
                 
                 deleteStatement.setString(1, key);
                 deleteStatement.executeUpdate();
-                
+                connection.commit();
                 logger.debug(key + " -> " + value);
                                 
                 AuthResponse authResponse = convert(value);

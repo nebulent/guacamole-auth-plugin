@@ -15,14 +15,24 @@ public class Connection implements java.io.Serializable {
 	private Integer port;
 	
 	private String password;
+  private String username;
 
 	public String getName() {
 		return name;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
 	@XmlElement(name="name")
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@XmlElement(name="username")
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getProtocol() {

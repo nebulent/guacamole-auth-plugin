@@ -8,6 +8,7 @@ public interface Connector {
     static String PROP_KEY_HOSTNAME = "hostname";
     static String PROP_KEY_PORT = "port";
     static String PROP_KEY_PASSWORD = "password";
+    static String PROP_KEY_USERNAME = "username";
 
     Map<String, GuacamoleConfiguration> findConfigurations(String key);
 }

@@ -25,6 +25,7 @@ public class MySQLConnector extends AbstractConnector implements Connector {
             properties.put("user", user);
             properties.put("password", password);
             connection = DriverManager.getConnection(dbUrl, properties);
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement("select config from configuration where id = ?");
             deleteStatement = connection.prepareStatement("delete from configuration where id = ?");
         } catch (ClassNotFoundException cnfe) {
@@ -71,6 +72,7 @@ public class MySQLConnector extends AbstractConnector implements Connector {
                         config.setParameter(PROP_KEY_HOSTNAME, con.getHost());
                         config.setParameter(PROP_KEY_PORT, String.valueOf(con.getPort()));
                         config.setParameter(PROP_KEY_PASSWORD, con.getPassword());
+                        config.setParameter(PROP_KEY_USERNAME, con.getUsername());
 
                         configs.put(con.getName(), config);
 
